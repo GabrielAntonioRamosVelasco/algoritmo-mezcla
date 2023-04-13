@@ -18,19 +18,20 @@ void swap(void* x, void* y, int tam_dat,int* cuenta){
   return;
 }
 
-/*Implementación del método de ordenamiento shell
+/*Implementación del método de ordenamiento mezcla
   Permite ordenar cualquier tipo de datos. Para ello utiliza un 
-  apuntador a la función que sabe compoarar los datos que están en
+  apuntador a la función que sabe comparar los datos que están en
   el arreglo ar.
-  El último parámetro es un contador que permite saber cuantas veces
-  se invocó a la función swap y a la función que compara los datos 
-  para aproximar la complejidad
+    
+  En este caso hay se utilizan dos funciones, "mezclaSort" para ir dividiendo en
+  dos el arreglo de forma recursiva y la otra "mezcla" para mezclar (ordenar) los
+  elementos de estos arreglos divididos.
+  La primer función necesita como parámetros extra el "inicio" y "fin" del arreglo a
+  ordenar, de ahí salen dos subarreglos que seguirán dividiendose.
+  Posteriormente para la mezcla también se necesita el "inicio","fin" y también la mitad
+  que será obtenida en mezclaSort, esto para ordenar la primer mitad del arreglo
+  original y después la otra.
   
-  En este caso la variable "i" sirve para ir recorriendo todas las posciciones
-  y las variables "j" y "k" sirven para acceder a los contenidos del arreglo,
-  De tal manera que se empiezan a hacer saltos desde la mitad y se comparan
-  si el dato de la izquierda es menor al de la derecha, en ese caso se hace un swap
-  y así sucesivamente partiendo a la mitad cada vez hasta llegar a lo mínimo.
   
   
   */
@@ -42,15 +43,19 @@ void mezclaSort(void* ar, int tam_ar , int tam_dat, ap_fun fcmp, int* cont,int i
     mezclaSort(ar,tam_ar,tam_dat,fcmp,cont,inicio,mitad);
     mezclaSort(ar,tam_ar,tam_dat,fcmp,cont,mitad+1,fin);
     mezcla(ar,tam_ar,tam_dat,fcmp,cont,inicio,mitad,fin);
- 
   }
 }
 
+/*El algoritmo consiste en ir comparando dos posiciones, donde
+se irán haciendo swaps de tal forma que queden ordenadas de
+menor a mayor, todo esto con ayuda de un arreglo de datos 
+auxiliar
+
+*/
+
 void mezcla(void* ar, int tam_ar , int tam_dat, ap_fun fcmp, int* cont, int inicio, int mitad, int fin){ 
   int i,j,k;
-  int tam1,tam2;
-  tam1=mitad-inicio+1;
-  tam2= fin-mitad;
+ 
 
 
   void *aux=(void*) malloc((fin-inicio+1) * tam_dat*tam_ar);
